@@ -5,9 +5,10 @@ const mockLink = new ApolloLink((operation) => {
   return new Observable((observer) => {
     setTimeout(() => {
       if (operation.operationName === 'GetImages') {
+        const shuffledImages = [...mockImages].sort(() => Math.random() - 0.5);
         observer.next({
           data: {
-            images: mockImages,
+            images: shuffledImages,
           },
         });
       } else {

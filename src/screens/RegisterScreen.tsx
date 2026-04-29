@@ -10,6 +10,7 @@ import {
   Platform,
   ScrollView,
 } from 'react-native';
+import { SafeAreaView } from 'react-native-safe-area-context';
 import { useNavigation } from '@react-navigation/native';
 import InputField from '../components/InputField';
 import Toast from '../components/Toast';
@@ -58,7 +59,7 @@ const RegisterScreen: React.FC = () => {
   };
 
   return (
-    <View style={styles.container}>
+    <SafeAreaView style={styles.container}>
       <Image source={{ uri: BG_IMAGE }} style={styles.bgImage} />
       <View style={styles.overlay} />
 
@@ -128,7 +129,7 @@ const RegisterScreen: React.FC = () => {
       </KeyboardAvoidingView>
 
       <Toast message={toastMessage} type={toastType} onHide={() => setToastMessage('')} />
-    </View>
+    </SafeAreaView>
   );
 };
 

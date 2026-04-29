@@ -1,5 +1,6 @@
 import React, { useEffect, useRef } from 'react';
 import { View, Text, StyleSheet, TouchableOpacity, Animated } from 'react-native';
+import { SafeAreaView } from 'react-native-safe-area-context';
 import { useNavigation } from '@react-navigation/native';
 
 const WelcomeScreen: React.FC = () => {
@@ -20,10 +21,16 @@ const WelcomeScreen: React.FC = () => {
         useNativeDriver: true,
       }),
     ]).start();
-  }, [opacity, translateY]);
+
+    const timer = setTimeout(() => {
+      navigation.navigate('ImageGallery' as never);
+    }, 1200);
+
+    return () => clearTimeout(timer);
+  }, [opacity, translateY, navigation]);
 
   return (
-    <View style={styles.container}>
+    <SafeAreaView style={styles.container}>
       <Animated.View
         style={[
           styles.content,
@@ -36,11 +43,10 @@ const WelcomeScreen: React.FC = () => {
         <Text style={styles.welcomeTitle}>Welcome to</Text>
         <Text style={styles.welcomeSubtitle}>PixelGallery</Text>
         <Text style={styles.welcomeText}>Your beautifully vibrant creative journey begins here.</Text>
-        <TouchableOpacity style={styles.exploreButton} onPress={() => navigation.navigate('Register' as never)}>
-          <Text style={styles.exploreButtonText}>Back to Register</Text>
-        </TouchableOpacity>
+       
+          
       </Animated.View>
-    </View>
+    </SafeAreaView>
   );
 };
 
@@ -78,23 +84,7 @@ const styles = StyleSheet.create({
     marginBottom: 48,
     lineHeight: 24,
   },
-  exploreButton: {
-    backgroundColor: '#1a1a1a', // High contrast button
-    paddingHorizontal: 36,
-    paddingVertical: 18,
-    borderRadius: 30,
-    shadowColor: '#000000',
-    shadowOffset: { width: 0, height: 4 },
-    shadowOpacity: 0.2,
-    shadowRadius: 10,
-    elevation: 5,
-  },
-  exploreButtonText: {
-    color: '#ffffff',
-    fontSize: 18,
-    fontWeight: '800',
-    letterSpacing: 0.5,
-  },
+
 });
 
 export default WelcomeScreen;

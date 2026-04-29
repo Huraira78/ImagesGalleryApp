@@ -5,15 +5,18 @@ import { ApolloProvider } from '@apollo/client/react';
 import AppNavigator from './src/navigation/AppNavigator';
 import { store } from './src/store/store';
 import { client } from './src/graphql/client';
+import { SafeAreaProvider } from 'react-native-safe-area-context';
 
 export default function App() {
   return (
-    <ApolloProvider client={client}>
-      <Provider store={store}>
-        <StatusBar barStyle="dark-content" backgroundColor="transparent" translucent />
-        <AppNavigator />
-      </Provider>
-    </ApolloProvider>
+    <SafeAreaProvider>
+      <ApolloProvider client={client}>
+        <Provider store={store}>
+          <StatusBar barStyle="dark-content" backgroundColor="transparent" translucent />
+          <AppNavigator />
+        </Provider>
+      </ApolloProvider>
+    </SafeAreaProvider>
   );
 }
 
