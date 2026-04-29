@@ -6,13 +6,12 @@ import Icon from 'react-native-vector-icons/Ionicons';
 const SplashScreen: React.FC = () => {
   const navigation = useNavigation();
 
-  // Animations setup
+  
   const scaleAnim = useRef(new Animated.Value(0.4)).current;
   const opacityAnim = useRef(new Animated.Value(0)).current;
   const rotateAnim = useRef(new Animated.Value(0)).current;
 
   useEffect(() => {
-    // 1. Play highly attractive entry animation
     Animated.parallel([
       Animated.timing(opacityAnim, {
         toValue: 1,
@@ -25,7 +24,6 @@ const SplashScreen: React.FC = () => {
         tension: 40,
         useNativeDriver: true,
       }),
-      // Slight 3D rotation effect for the camera icon
       Animated.timing(rotateAnim, {
         toValue: 1,
         duration: 1000,
@@ -33,7 +31,6 @@ const SplashScreen: React.FC = () => {
       })
     ]).start();
 
-    // 2. Navigate away seamlessly after 1.8 seconds (giving time to enjoy the animation)
     const timer = setTimeout(() => {
       navigation.reset({
         index: 0,
@@ -44,7 +41,6 @@ const SplashScreen: React.FC = () => {
     return () => clearTimeout(timer);
   }, [navigation, opacityAnim, scaleAnim, rotateAnim]);
 
-  // Interpolate rotation to spin from -15 degrees to 0
   const spin = rotateAnim.interpolate({
     inputRange: [0, 1],
     outputRange: ['-15deg', '0deg']
@@ -74,7 +70,7 @@ const SplashScreen: React.FC = () => {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#1a1a1a', // Extremely sleek dark background
+    backgroundColor: '#1a1a1a', 
     justifyContent: 'center',
     alignItems: 'center',
   },
@@ -105,7 +101,7 @@ const styles = StyleSheet.create({
   subtitle: {
     fontSize: 16,
     fontWeight: '600',
-    color: '#a4b0be', // Soft silver/gray for subtitle
+    color: '#a4b0be', 
     letterSpacing: 1,
     textTransform: 'uppercase',
   },

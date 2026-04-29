@@ -22,25 +22,22 @@ const ImageDetailsScreen: React.FC = () => {
   const dispatch = useAppDispatch();
   const { id } = route.params;
 
-  // Read the image perfectly from Redux
+
   const image = useAppSelector((state) => state.gallery.images.find((i) => i.id === id));
   
-  // Read liked status from Redux
+  
   const likedImageIds = useAppSelector((state) => state.gallery.likedImageIds);
   const isLiked = likedImageIds.includes(id);
 
-  // Animation 1 — Image Zoom on Entry
+  
   const scaleAnim = useRef(new Animated.Value(0.8)).current;
   const opacityAnim = useRef(new Animated.Value(0)).current;
-
-  // Animation 2 — Heart Like Animation (Floating upward)
   const [showFloatingHeart, setShowFloatingHeart] = useState(false);
   const floatAnim = useRef(new Animated.Value(0)).current;
   const floatOpacity = useRef(new Animated.Value(0)).current;
   const floatScale = useRef(new Animated.Value(0)).current;
 
   useEffect(() => {
-    // Fire image zoom entry animation exactly as requested
     Animated.parallel([
       Animated.timing(opacityAnim, {
         toValue: 1,
@@ -59,14 +56,14 @@ const ImageDetailsScreen: React.FC = () => {
   const handleLike = () => {
     dispatch(toggleLike(id));
     
-    // Only fire the beautiful floating heart animation when "Liking" (not unliking)
+  
     if (!isLiked) {
       setShowFloatingHeart(true);
       floatAnim.setValue(0);
       floatOpacity.setValue(0);
       floatScale.setValue(0);
 
-      // Sequence: scale up from 0 to 1.3, then scale down to 1 while floating up and fading out
+      
       Animated.sequence([
         Animated.parallel([
           Animated.timing(floatScale, { toValue: 1.3, duration: 250, useNativeDriver: true }),
@@ -99,7 +96,7 @@ const ImageDetailsScreen: React.FC = () => {
         resizeMode="cover"
       />
       
-      {/* Absolute Back Button */}
+      
       <View style={styles.backButtonSafeArea}>
         <TouchableOpacity style={styles.backButton} onPress={() => navigation.goBack()}>
           <Icon name="chevron-back" size={28} color="#2d3436" />
@@ -119,7 +116,6 @@ const ImageDetailsScreen: React.FC = () => {
         <Text style={styles.description}>{image.description}</Text>
       </ScrollView>
 
-      {/* Floating Action Button (Like) */}
       <TouchableOpacity 
         style={[styles.fab, isLiked && styles.fabLiked]} 
         onPress={handleLike}
@@ -128,7 +124,6 @@ const ImageDetailsScreen: React.FC = () => {
         <Icon name={isLiked ? "heart" : "heart-outline"} size={28} color={isLiked ? "#fff" : "#ff4757"} />
       </TouchableOpacity>
 
-      {/* Floating Heart Animation overlay perfectly positioned above FAB */}
       {showFloatingHeart && (
         <Animated.View
           style={[
@@ -161,8 +156,8 @@ const styles = StyleSheet.create({
   },
   backButtonSafeArea: {
     position: 'absolute',
-    top: 0,
-    left: 16,
+    top: 17,
+    left: 8,
     zIndex: 10,
   },
   backButton: {

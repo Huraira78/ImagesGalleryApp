@@ -2,6 +2,7 @@ import React, { useEffect, useRef } from 'react';
 import { View, Text, StyleSheet, TouchableOpacity, Animated } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { useNavigation } from '@react-navigation/native';
+import Icon from 'react-native-vector-icons/Ionicons';
 
 const WelcomeScreen: React.FC = () => {
   const navigation = useNavigation();
@@ -40,6 +41,18 @@ const WelcomeScreen: React.FC = () => {
           },
         ]}
       >
+        <View style={[styles.iconWrapper, { backgroundColor: '#ff4757', overflow: 'hidden' }]}>
+          <View style={{
+            position: 'absolute',
+            top: -20,
+            left: -20,
+            width: 120,
+            height: 120,
+            backgroundColor: '#ff6b6b',
+            borderRadius: 60,
+          }} />
+          <Icon name="camera" size={42} color="#ffffff" />
+        </View>
         <Text style={styles.welcomeTitle}>Welcome to</Text>
         <Text style={styles.welcomeSubtitle}>PixelGallery</Text>
         <Text style={styles.welcomeText}>Your beautifully vibrant creative journey begins here.</Text>
@@ -53,13 +66,27 @@ const WelcomeScreen: React.FC = () => {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#fff0f0', // Light warm background
+    backgroundColor: '#fff0f0', 
     justifyContent: 'center',
     alignItems: 'center',
     padding: 24,
   },
   content: {
     alignItems: 'center',
+  },
+  iconWrapper: {
+    width: 80,
+    height: 80,
+    borderRadius: 24,
+    backgroundColor: '#ffffff',
+    justifyContent: 'center',
+    alignItems: 'center',
+    marginBottom: 24,
+    shadowColor: '#ff6b6b',
+    shadowOffset: { width: 0, height: 6 },
+    shadowOpacity: 0.3,
+    shadowRadius: 10,
+    elevation: 8,
   },
   welcomeTitle: {
     fontSize: 24,
@@ -70,7 +97,7 @@ const styles = StyleSheet.create({
   welcomeSubtitle: {
     fontSize: 46,
     fontWeight: '900',
-    color: '#ff6b6b', // Prominent eye-catching coral matching the register screen
+    color: '#ff6b6b',
     marginBottom: 16,
     textShadowColor: 'rgba(255, 107, 107, 0.2)',
     textShadowOffset: { width: 0, height: 4 },

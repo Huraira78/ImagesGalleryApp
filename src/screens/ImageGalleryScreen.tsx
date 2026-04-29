@@ -46,7 +46,6 @@ const ImageGalleryScreen: React.FC = () => {
   };
 
   const handleImagePress = (image: ImageItem) => {
-    // Navigate to details screen, passing only the ID
     (navigation.navigate as any)('ImageDetails', { id: image.id });
   };
 

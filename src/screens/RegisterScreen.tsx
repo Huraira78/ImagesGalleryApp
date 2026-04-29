@@ -12,6 +12,7 @@ import {
 } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { useNavigation } from '@react-navigation/native';
+import Icon from 'react-native-vector-icons/Ionicons';
 import InputField from '../components/InputField';
 import Toast from '../components/Toast';
 import { validateName, validateEmail, validatePhone, validatePassword } from '../utils/validators';
@@ -68,6 +69,20 @@ const RegisterScreen: React.FC = () => {
         behavior={Platform.OS === 'ios' ? 'padding' : undefined}
       >
         <View style={styles.formWrapper}>
+          <View style={styles.topLogoContainer}>
+            <View style={[styles.iconWrapper, { backgroundColor: '#ff4757', overflow: 'hidden' }]}>
+              <View style={{
+                position: 'absolute',
+                top: -20,
+                left: -20,
+                width: 120,
+                height: 120,
+                backgroundColor: '#ff6b6b',
+                borderRadius: 60,
+              }} />
+              <Icon name="camera" size={42} color="#ffffff" />
+            </View>
+          </View>
           <View style={styles.formContainer}>
             <ScrollView
               contentContainerStyle={styles.scrollContent}
@@ -154,23 +169,55 @@ const styles = StyleSheet.create({
     left: 0,
     right: 0,
     bottom: 0,
-    backgroundColor: 'rgba(255, 255, 255, 0.35)', // Lighter overlay
+    backgroundColor: 'rgba(255, 255, 255, 0.35)',
+  },
+  topLogoContainer: {
+    position: 'absolute',
+    top: Platform.OS === 'ios' ? -130 : -145,
+    // top: -150,
+    left: 0,
+    right: 0,
+    alignItems: 'center',
+    zIndex: 10,
+  },
+  iconWrapper: {
+    width: 80,
+    height: 80,
+    borderRadius: 24,
+    backgroundColor: '#ffffff',
+    justifyContent: 'center',
+    alignItems: 'center',
+    marginBottom: 12,
+    shadowColor: '#ff6b6b',
+    shadowOffset: { width: 0, height: 6 },
+    shadowOpacity: 0.3,
+    shadowRadius: 10,
+    elevation: 8,
+  },
+  topLogoTitle: {
+    fontSize: 26,
+    fontWeight: '900',
+    color: '#ffffff',
+    letterSpacing: 1.5,
+    textShadowColor: 'rgba(0, 0, 0, 0.4)',
+    textShadowOffset: { width: 0, height: 2 },
+    textShadowRadius: 6,
   },
   keyboardView: {
     flex: 1,
     justifyContent: 'flex-end',
   },
   formWrapper: {
-    height: height * 0.7, // 70% of device height
+    height: height * 0.7,
     justifyContent: 'flex-end',
   },
   formContainer: {
     flex: 1,
-    backgroundColor: '#ffffff', // Clean white background for the form
-    borderTopLeftRadius: 40,
-    borderTopRightRadius: 40,
+    backgroundColor: '#ffffff',
+    borderTopLeftRadius: 90,
+    borderTopRightRadius: 0,
     borderTopWidth: 6,
-    borderTopColor: '#ff6b6b', // Prominent eye-catching coral border on top
+    borderTopColor: '#ff6b6b',
     shadowColor: '#ff6b6b',
     shadowOffset: { width: 0, height: -10 },
     shadowOpacity: 0.15,
@@ -200,7 +247,7 @@ const styles = StyleSheet.create({
     lineHeight: 22,
   },
   submitButton: {
-    backgroundColor: '#ff6b6b', // Vibrant, prominent eye-catching coral
+    backgroundColor: '#ff6b6b',
     borderRadius: 16,
     padding: 18,
     alignItems: 'center',

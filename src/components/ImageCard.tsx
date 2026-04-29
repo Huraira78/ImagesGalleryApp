@@ -4,7 +4,7 @@ import Icon from 'react-native-vector-icons/Ionicons';
 import { ImageItem } from '../store/gallerySlice';
 
 const { width } = Dimensions.get('window');
-const cardWidth = (width - 48) / 2; // 2 columns, padding 16 on sides, 16 between
+const cardWidth = (width - 48) / 2; 
 
 interface ImageCardProps {
   image: ImageItem;
@@ -16,7 +16,7 @@ interface ImageCardProps {
 const ImageCard: React.FC<ImageCardProps> = ({ image, isLiked, onPress, onLike }) => {
   const scaleAnim = useRef(new Animated.Value(1)).current;
 
-  // Bounce animation when isLiked changes
+  
   useEffect(() => {
     if (isLiked) {
       Animated.sequence([
