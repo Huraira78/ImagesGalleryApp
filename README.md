@@ -57,6 +57,10 @@ npx react-native run-android
 ### 4. Hardware Integration (Native Bridge)
 - **Device Information:** A custom Native Android Module allows the app to communicate directly with the phone's hardware. By tapping the settings icon in the gallery, users can view their specific device model, manufacturer, brand, and Android SDK version.
 
+### 5. UI & Branding Polish
+- **Custom App Branding:** The default Android robot icon has been fully replaced with a custom, high-quality camera vector logo set against a vibrant coral-red gradient, perfectly matching the app's internal color scheme.
+- **Modern Loading States:** Instead of standard loading spinners, the gallery utilizes a beautiful, custom animated skeleton layout that pulses seamlessly while fetching data from the API.
+
 ---
 
 ## Technical Stack
