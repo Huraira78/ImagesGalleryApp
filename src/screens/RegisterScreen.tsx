@@ -10,7 +10,7 @@ import {
   Platform,
   ScrollView,
 } from 'react-native';
-import { SafeAreaView } from 'react-native-safe-area-context';
+import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { useNavigation } from '@react-navigation/native';
 import Icon from 'react-native-vector-icons/Ionicons';
 import InputField from '../components/InputField';
@@ -23,7 +23,8 @@ const BG_IMAGE = 'https://images.unsplash.com/photo-1513364776144-60967b0f800f?q
 
 const RegisterScreen: React.FC = () => {
   const navigation = useNavigation();
-
+  const insets = useSafeAreaInsets();
+  console.log('insets', insets);
   const [name, setName] = useState('');
   const [email, setEmail] = useState('');
   const [phone, setPhone] = useState('');
@@ -60,7 +61,7 @@ const RegisterScreen: React.FC = () => {
   };
 
   return (
-    <SafeAreaView style={styles.container}>
+    <View style={[styles.container, { paddingTop: insets.top }]}>
       <Image source={{ uri: BG_IMAGE }} style={styles.bgImage} />
       <View style={styles.overlay} />
 
@@ -85,12 +86,15 @@ const RegisterScreen: React.FC = () => {
           </View>
           <View style={styles.formContainer}>
             <ScrollView
-              contentContainerStyle={styles.scrollContent}
+              contentContainerStyle={[
+                styles.scrollContent, 
+                { paddingBottom: Math.max(insets.bottom + 20, Platform.OS === 'ios' ? 50 : 30) }
+              ]}
               keyboardShouldPersistTaps="handled"
               showsVerticalScrollIndicator={false}
             >
               <View style={styles.headerContainer}>
-                <Text style={styles.title}>Join Gallery</Text>
+                <Text style={styles.title}>Join Gallery </Text>
                 <Text style={styles.subtitle}>Create an account to save and share your beautiful moments.</Text>
               </View>
 
@@ -144,7 +148,7 @@ const RegisterScreen: React.FC = () => {
       </KeyboardAvoidingView>
 
       <Toast message={toastMessage} type={toastType} onHide={() => setToastMessage('')} />
-    </SafeAreaView>
+    </View>
   );
 };
 
@@ -154,7 +158,7 @@ const styles = StyleSheet.create({
     backgroundColor: '#fff0f0',
   },
   bgImage: {
-    position: 'absolute',
+    // position: 'absolute',
     top: 0,
     left: 0,
     right: 0,
@@ -169,7 +173,7 @@ const styles = StyleSheet.create({
     left: 0,
     right: 0,
     bottom: 0,
-    backgroundColor: 'rgba(255, 255, 255, 0.35)',
+    backgroundColor: 'rgba(255, 255, 255, 0.27)',
   },
   topLogoContainer: {
     position: 'absolute',

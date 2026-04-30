@@ -6,6 +6,7 @@ import WelcomeScreen from '../screens/WelcomeScreen';
 import ImageGalleryScreen from '../screens/ImageGalleryScreen';
 import ImageDetailsScreen from '../screens/ImageDetailsScreen';
 import SplashScreen from '../screens/SplashScreen';
+import DeviceInfoScreen from '../screens/DeviceInfoScreen';
 
 const Stack = createNativeStackNavigator();
 
@@ -27,6 +28,13 @@ const AppNavigator = () => {
           name="ImageDetails" 
           component={ImageDetailsScreen} 
           options={{ animation: 'fade' }} 
+        />
+        <Stack.Screen
+          name="DeviceInfo"
+          component={DeviceInfoScreen}
+          options={{
+            presentation: 'modal',
+          }}
         />
       </Stack.Navigator>
     </NavigationContainer>

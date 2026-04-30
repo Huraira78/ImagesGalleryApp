@@ -28,7 +28,14 @@ const gallerySlice = createSlice({
   initialState,
   reducers: {
     setImages(state, action: PayloadAction<ImageItem[]>) {
-      state.images = action.payload;
+      // Map over incoming images and preserve the 'like' count if it's already liked locally
+      // This ensures pulling to refresh doesn't wipe out local likes since we have a mock server
+      state.images = action.payload.map(img => {
+        if (state.likedImageIds.includes(img.id)) {
+          return { ...img, likes: img.likes + 1 };
+        }
+        return img;
+      });
     },
     setLoading(state, action: PayloadAction<boolean>) {
       state.loading = action.payload;

@@ -12,7 +12,7 @@ export default function App() {
     <SafeAreaProvider>
       <ApolloProvider client={client}>
         <Provider store={store}>
-          <StatusBar barStyle="dark-content" backgroundColor="transparent" translucent />
+        <StatusBar barStyle="light-content" backgroundColor="black" translucent={false} />
           <AppNavigator />
         </Provider>
       </ApolloProvider>

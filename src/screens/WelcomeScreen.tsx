@@ -1,6 +1,5 @@
 import React, { useEffect, useRef } from 'react';
 import { View, Text, StyleSheet, TouchableOpacity, Animated } from 'react-native';
-import { SafeAreaView } from 'react-native-safe-area-context';
 import { useNavigation } from '@react-navigation/native';
 import Icon from 'react-native-vector-icons/Ionicons';
 
@@ -31,7 +30,7 @@ const WelcomeScreen: React.FC = () => {
   }, [opacity, translateY, navigation]);
 
   return (
-    <SafeAreaView style={styles.container}>
+    <View style={styles.container}>
       <Animated.View
         style={[
           styles.content,
@@ -59,7 +58,7 @@ const WelcomeScreen: React.FC = () => {
        
           
       </Animated.View>
-    </SafeAreaView>
+    </View>
   );
 };
 

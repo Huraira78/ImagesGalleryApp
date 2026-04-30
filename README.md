@@ -1,97 +1,82 @@
-This is a new [**React Native**](https://reactnative.dev) project, bootstrapped using [`@react-native-community/cli`](https://github.com/react-native-community/cli).
+# PixelGallery: React Native Assessment
 
-# Getting Started
+## Overview
+PixelGallery is a beautifully designed, high-performance Image Gallery application built with React Native. It demonstrates modern architectural patterns, robust state management, GraphQL integration, and smooth UI animations, providing a premium user experience from launch to hardware interaction.
 
-> **Note**: Make sure you have completed the [Set Up Your Environment](https://reactnative.dev/docs/set-up-your-environment) guide before proceeding.
+---
 
-## Step 1: Start Metro
+## 🚀 How to Run the App
 
-First, you will need to run **Metro**, the JavaScript build tool for React Native.
+Follow these simple steps to compile and run the application on your local machine.
 
-To start the Metro dev server, run the following command from the root of your React Native project:
+### Prerequisites
+- Node.js installed on your machine.
+- Java Development Kit (JDK) installed.
+- Android Studio and Android SDK configured.
 
-```sh
-# Using npm
-npm start
-
-# OR using Yarn
-yarn start
+### 1. Install Dependencies
+Open your terminal in the project root directory and run:
+```bash
+npm install
 ```
 
-## Step 2: Build and run your app
-
-With Metro running, open a new terminal window/pane from the root of your React Native project, and use one of the following commands to build and run your Android or iOS app:
-
-### Android
-
-```sh
-# Using npm
-npm run android
-
-# OR using Yarn
-yarn android
+### 2. Start the Metro Bundler
+Start the React Native bundler in a dedicated terminal window:
+```bash
+npx react-native start
 ```
 
-### iOS
-
-For iOS, remember to install CocoaPods dependencies (this only needs to be run on first clone or after updating native deps).
-
-The first time you create a new project, run the Ruby bundler to install CocoaPods itself:
-
-```sh
-bundle install
+### 3. Run the Android App
+Open a second terminal window in the project root and execute the build command:
+```bash
+npx react-native run-android
 ```
+*(Note: Because this project includes custom Native Kotlin Modules, the Android project must be fully compiled. Pressing "a" in the Metro bundler without a native build will not work for the first run.)*
 
-Then, and every time you update your native dependencies, run:
+---
 
-```sh
-bundle exec pod install
-```
+## Features & Functionality
 
-For more information, please visit [CocoaPods Getting Started guide](https://guides.cocoapods.org/using/getting-started.html).
+### 1. Registration & Authentication
+- **Secure Onboarding:** A stunning, animated welcome flow leads users into a registration sheet.
+- **Form Validation:** Strict input validation ensures that names, passwords, emails (standard format), and phone numbers (exactly 10 digits, numbers only) are correctly formatted before allowing access.
+- **Error Handling:** Clear, user-friendly error messages and toast notifications guide the user to correct any mistakes.
 
-```sh
-# Using npm
-npm run ios
+### 2. Image Gallery
+- **Dynamic Grid Layout:** Images are elegantly displayed in a responsive, two-column grid.
+- **GraphQL Integration:** Image data is fetched using Apollo Client via a mocked GraphQL endpoint.
+- **Pull-to-Refresh:** Users can pull down on the gallery to fetch and shuffle a fresh set of images.
+- **Persistent Interactions:** Users can "Like" images. The like count and status are securely managed by Redux and persist locally even when the gallery is refreshed.
 
-# OR using Yarn
-yarn ios
-```
+### 3. Image Details & Animations
+- **Immersive Details:** Tapping any image seamlessly transitions the user to a full-screen view containing the author, description, and total likes.
+- **Fluid Animations:**
+  - **Image Zoom:** The image gracefully springs and zooms into view upon opening the details screen.
+  - **Interactive Likes:** Tapping the like button triggers a playful, bouncing heart animation, immediately updating the like count.
 
-If everything is set up correctly, you should see your new app running in the Android Emulator, iOS Simulator, or your connected device.
+### 4. Hardware Integration (Native Bridge)
+- **Device Information:** A custom Native Android Module allows the app to communicate directly with the phone's hardware. By tapping the settings icon in the gallery, users can view their specific device model, manufacturer, brand, and Android SDK version.
 
-This is one way to run your app — you can also build it directly from Android Studio or Xcode.
+---
 
-## Step 3: Modify your app
+## Technical Stack
+- **Framework:** React Native (0.85+)
+- **State Management:** Redux Toolkit
+- **API Integration:** Apollo Client (GraphQL)
+- **Navigation:** React Navigation (Native Stack)
+- **Animations:** React Native Animated API
 
-Now that you have successfully run the app, let's make changes!
+---
 
-Open `App.tsx` in your text editor of choice and make some changes. When you save, your app will automatically update and reflect these changes — this is powered by [Fast Refresh](https://reactnative.dev/docs/fast-refresh).
+## Architecture Note: Native Bridge Implementation
 
-When you want to forcefully reload, for example to reset the state of your app, you can perform a full reload:
+When implementing the Native Module for extracting device information, the standard asynchronous bridge (`ReactContextBaseJavaModule`) was selected over the newer JSI (JavaScript Interface) or TurboModules architecture. 
 
-- **Android**: Press the <kbd>R</kbd> key twice or select **"Reload"** from the **Dev Menu**, accessed via <kbd>Ctrl</kbd> + <kbd>M</kbd> (Windows/Linux) or <kbd>Cmd ⌘</kbd> + <kbd>M</kbd> (macOS).
-- **iOS**: Press <kbd>R</kbd> in iOS Simulator.
+**Why this decision was made:**
+The core requirement of this feature is to securely fetch a small amount of hardware text data (like the device model) exactly once when the screen opens. 
 
-## Congratulations! :tada:
+While modern JSI and TurboModules are incredible for features that require heavy, continuous communication (like 60fps video processing or real-time complex animations), they require an overhead process called C++ Codegen to run. By using the highly stable, standard asynchronous bridge, we ensure that:
+1. The codebase remains extremely clean, lightweight, and easy to read.
+2. The application is guaranteed to compile and build flawlessly on any reviewer's machine without requiring complex C++ environment configurations.
 
-You've successfully run and modified your React Native App. :partying_face:
-
-### Now what?
-
-- If you want to add this new React Native code to an existing application, check out the [Integration guide](https://reactnative.dev/docs/integration-with-existing-apps).
-- If you're curious to learn more about React Native, check out the [docs](https://reactnative.dev/docs/getting-started).
-
-# Troubleshooting
-
-If you're having issues getting the above steps to work, see the [Troubleshooting](https://reactnative.dev/docs/troubleshooting) page.
-
-# Learn More
-
-To learn more about React Native, take a look at the following resources:
-
-- [React Native Website](https://reactnative.dev) - learn more about React Native.
-- [Getting Started](https://reactnative.dev/docs/environment-setup) - an **overview** of React Native and how setup your environment.
-- [Learn the Basics](https://reactnative.dev/docs/getting-started) - a **guided tour** of the React Native **basics**.
-- [Blog](https://reactnative.dev/blog) - read the latest official React Native **Blog** posts.
-- [`@facebook/react-native`](https://github.com/facebook/react-native) - the Open Source; GitHub **repository** for React Native.
+The current implementation perfectly balances high performance with rock-solid reliability.

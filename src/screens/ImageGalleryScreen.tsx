@@ -4,34 +4,44 @@ import {
   Text,
   StyleSheet,
   FlatList,
-  ActivityIndicator,
   TouchableOpacity,
 } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { useQuery } from '@apollo/client/react';
 import { useNavigation } from '@react-navigation/native';
+import Icon from 'react-native-vector-icons/Ionicons';
 import { GET_IMAGES } from '../graphql/queries';
 import { useAppDispatch, useAppSelector } from '../store/store';
-import { setImages, toggleLike, ImageItem } from '../store/gallerySlice';
+import { setImages, toggleLike, setLoading, setError, ImageItem } from '../store/gallerySlice';
 import ImageCard from '../components/ImageCard';
+import SkeletonCard from '../components/SkeletonCard';
 
 const ImageGalleryScreen: React.FC = () => {
   const dispatch = useAppDispatch();
   const navigation = useNavigation();
-  
-  const { images, likedImageIds } = useAppSelector((state) => state.gallery);
+
+  const { images, likedImageIds, loading, error } = useAppSelector((state) => state.gallery);
   const [refreshing, setRefreshing] = useState(false);
 
-  const { loading, error, data, refetch } = useQuery<{ images: ImageItem[] }>(GET_IMAGES, {
+  const { loading: apolloLoading, error: apolloError, data, refetch } = useQuery<{ images: ImageItem[] }>(GET_IMAGES, {
     notifyOnNetworkStatusChange: true,
   });
 
   useEffect(() => {
-    if (data?.images) { 
+
+    dispatch(setLoading(apolloLoading));
+
+    if (apolloError) {
+      dispatch(setError(apolloError.message));
+    } else {
+      dispatch(setError(null));
+    }
+
+    if (data?.images) {
       dispatch(setImages(data.images));
       setRefreshing(false);
     }
-  }, [data, dispatch]);
+  }, [apolloLoading, apolloError, data, dispatch]);
 
   const handleRefresh = async () => {
     setRefreshing(true);
@@ -66,11 +76,21 @@ const ImageGalleryScreen: React.FC = () => {
   };
 
   if (loading && !refreshing && images.length === 0) {
+    const dummyArray = Array.from({ length: 6 });
     return (
-      <View style={styles.centerContainer}>
-        <ActivityIndicator size="large" color="#ff6b6b" />
-        <Text style={styles.loadingText}>Discovering beautiful moments...</Text>
-      </View>
+      <SafeAreaView style={styles.container}>
+        <View style={styles.header}>
+          <Text style={styles.headerTitle}>Gallery</Text>
+          <TouchableOpacity onPress={() => (navigation.navigate as any)('DeviceInfo')}>
+            <Icon name="settings-outline" size={26} color="#2d3436" />
+          </TouchableOpacity>
+        </View>
+        <View style={styles.skeletonGrid}>
+          {dummyArray.map((_, index) => (
+            <SkeletonCard key={index} />
+          ))}
+        </View>
+      </SafeAreaView>
     );
   }
 
@@ -89,8 +109,11 @@ const ImageGalleryScreen: React.FC = () => {
     <SafeAreaView style={styles.container}>
       <View style={styles.header}>
         <Text style={styles.headerTitle}>Gallery</Text>
+        <TouchableOpacity onPress={() => (navigation.navigate as any)('DeviceInfo')}>
+          <Icon name="settings-outline" size={26} color="#2d3436" />
+        </TouchableOpacity>
       </View>
-      
+
       <FlatList
         data={images}
         keyExtractor={(item) => item.id}
@@ -112,6 +135,9 @@ const styles = StyleSheet.create({
     backgroundColor: '#f8f9fa',
   },
   header: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    alignItems: 'center',
     paddingHorizontal: 20,
     paddingVertical: 15,
     backgroundColor: '#ffffff',
@@ -132,7 +158,7 @@ const styles = StyleSheet.create({
   },
   listContent: {
     padding: 16,
-    paddingBottom: 40,
+    paddingBottom: 20,
   },
   columnWrapper: {
     justifyContent: 'space-between',
@@ -170,6 +196,12 @@ const styles = StyleSheet.create({
     color: '#ffffff',
     fontWeight: '700',
     fontSize: 16,
+  },
+  skeletonGrid: {
+    padding: 16,
+    flexDirection: 'row',
+    flexWrap: 'wrap',
+    justifyContent: 'space-between',
   },
 });
 
